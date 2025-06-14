@@ -1,0 +1,129 @@
+# iOS Speech Analysis Development Specification (Deepgram Integration)
+
+## 1. Prerequisites & Setup
+
+### 1.1. Deepgram Account Setup
+1.1.1. Register at console.deepgram.com with valid email address
+1.1.2. Verify email (no credit card required)
+1.1.3. Navigate to API Keys section and create new API key
+1.1.4. Test API access via Deepgram Playground
+1.1.5. Verify $200 free credit allocation (750 hours)
+
+### 1.2. Development Environment
+1.2.1. Ensure Xcode is updated to latest version
+1.2.2. Open existing SpeakMateSwift project
+1.2.3. iOS URLSession sufficient for API calls
+
+## 2. API Integration & Validation
+
+### 2.1. Manual API Testing
+2.1.1. Record sample controversial prompt response (1-2 minutes)
+2.1.2. Upload via Deepgram Playground with sentiment=true parameter
+2.1.3. Verify transcription accuracy for Australian accent
+2.1.4. Test sentiment analysis scores (-1 to 1 range)
+2.1.5. Document response format and available metrics
+
+### 2.2. Direct iOS Integration
+2.2.1. Create shared `DeepgramModels.swift` for response structures
+2.2.2. Implement `DeepgramService.swift` for pure API calls
+2.2.3. Create `PerformanceAnalyser.swift` for scoring algorithms
+2.2.4. Test error handling and timeout scenarios
+2.2.5. Verify audio file format compatibility
+
+## 3. iOS App Integration
+
+### 3.1. Audio Recording Enhancement
+3.1.1. Modify `AudioRecorder.swift` for higher quality recording
+3.1.2. Implement audio file compression for API upload
+3.1.3. Add recording status indicators and level monitoring
+3.1.4. Store audio files temporarily in app documents directory
+3.1.5. Implement automatic cleanup of old recordings
+
+### 3.2. API Service Layer
+3.2.1. Create `DeepgramService.swift` class for pure API functionality
+3.2.2. Implement upload method with sentiment analysis enabled
+3.2.3. Add transcript and sentiment parsing functionality
+3.2.4. Create response models in shared `DeepgramModels.swift`
+3.2.5. Implement async/await pattern for API calls
+
+### 3.3. Performance Scoring Algorithm
+3.3.1. Map sentiment scores (-1 to 1) to performance metrics (0-100)
+3.3.2. Calculate fluency from confidence scores and speech timing
+3.3.3. Derive vocabulary range from word complexity analysis
+3.3.4. Generate pronunciation scores from confidence levels
+3.3.5. Compute overall score from component averages
+
+## 4. UI Implementation
+
+### 4.1. Results Processing
+4.1.1. Modify `PerformanceView.swift` to accept real performance data
+4.1.2. Update `DailyScoreView.swift` for API-based scoring and feedback
+4.1.3. Add loading states during API processing
+4.1.4. Implement error handling UI for failed analyses
+4.1.5. Add retry functionality for network failures
+
+### 4.2. Data Flow Integration
+4.2.1. Connect recording completion to Deepgram API trigger
+4.2.2. Display processing progress to user
+4.2.3. Navigate to results view upon completion
+4.2.4. Store results locally using `ResultsStorageManager.swift`
+4.2.5. Update chart data with new performance metrics
+
+### 4.3. Feedback Generation Enhancement
+4.3.1. Parse sentiment analysis for actionable insights
+4.3.2. Generate Aussie slang suggestions from transcript
+4.3.3. Create dynamic feedback based on sentiment scores
+4.3.4. Implement enhanced suggestion cards with confidence indicators
+4.3.5. Add confidence indicators from Deepgram data
+
+## 5. Testing & Refinement
+
+### 5.1. Functionality Testing
+5.1.1. Test with various Australian accents
+5.1.2. Verify sentiment scoring consistency across topics
+5.1.3. Test error scenarios (network failures, invalid audio)
+5.1.4. Validate UI responsiveness during processing
+5.1.5. Confirm data persistence across app sessions
+
+### 5.2. User Experience Testing
+5.2.1. Test complete user journey from recording to results
+5.2.2. Verify intuitive navigation flow
+5.2.3. Test with controversial prompt examples
+5.2.4. Validate sentiment-based scoring appears reasonable
+5.2.5. Ensure processing times under 15 seconds
+
+### 5.3. Demo Preparation
+5.3.1. Prepare sample recordings for investor demo
+5.3.2. Document Deepgram advantages over competitors
+5.3.3. Create demo script highlighting real-time sentiment analysis
+5.3.4. Test app stability under demo conditions
+5.3.5. Prepare fallback options if API unavailable
+
+## Technical Implementation Summary
+
+### Core Files Created/Modified:
+- `DeepgramModels.swift` - Shared data models and error types *ADDED TO SOURCE CODE*
+- `DeepgramService.swift` - Pure API service layer *ADDED TO SOURCE CODE*
+- `PerformanceAnalyser.swift` - Scoring algorithms and feedback generation *ADDED TO SOURCE CODE*
+- `ResultsStorageManager.swift` - Local data persistence *ADDED TO SOURCE CODE*
+- `AudioRecorder.swift` - Enhanced recording with iOS 18 compatibility *APPLIED TO 06111020*
+- `GradientView.swift` - Integrated API processing workflow *APPLIED TO 06111020*
+- `DailyScoreView.swift` - Real metrics display with confidence indicators *APPLIED TO 06111020*
+- `HomeView.swift` - Live chart data from stored results *APPLIED TO 06111020*
+- `ContentView.swift` - Updated parameter handling *APPLIED TO 06111020*
+
+### Architecture:
+- **API Layer**: Pure Deepgram integration with error handling
+- **Analysis Layer**: Performance metrics calculation and feedback generation  
+- **Storage Layer**: Local persistence using UserDefaults with Codable models
+- **UI Layer**: Real-time feedback with loading states and error handling
+
+### Key Features Implemented:
+- High-quality audio recording (44.1kHz, 128kbps AAC)
+- Real-time Deepgram API transcription with sentiment analysis
+- Performance scoring (fluency, pronunciation, vocabulary, clarity)
+- Aussie slang suggestions based on transcript content
+- Confidence indicators and dynamic feedback cards
+- Local storage of performance history
+- Live chart updates with selectable time periods
+- Comprehensive error handling and retry mechanisms

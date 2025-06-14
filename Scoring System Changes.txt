@@ -1,0 +1,32 @@
+# Summary of Scoring System Changes
+
+## Key Changes Implemented
+
+### 1. Strictness Factor Applied: **0.85x** (15% reduction)
+- **Removed**: 110% confidence boosting from pronunciation and confidence
+- **Applied**: 85% strictness multiplier across all metrics
+- **Result**: Scores now typically 15-25 points lower, making 90%+ achievements more challenging
+
+### 2. Clarity → Confidence Metric Transformation
+**Old Clarity**: Based purely on Deepgram confidence scores  
+**New Confidence**: 
+- **70% weight**: Sentiment analysis (-1 to +1 mapped to confidence levels)
+- **30% weight**: Word usage indicators (confident phrases vs hesitation words)
+- **Examples**: "definitely", "absolutely" boost score; "um", "maybe" reduce it
+
+### 3. Sentiment Integration into Fluency
+- **Main calculation**: Still based on WPM (55%) and pause analysis (35%)
+- **Sentiment influence**: 10% weighting with small modifier (0.95x to 1.05x)
+- **Logic**: Negative sentiment may indicate hesitation, affecting speech flow
+
+### 4. Maintained Metrics
+- **Pronunciation**: Stricter scoring but same confidence-based logic
+- **Vocabulary Range**: Stricter scoring but unchanged diversity/complexity analysis
+- **Overall**: Still simple average of the 4 scores
+
+## Scoring Impact Examples
+- **Previous**: Deepgram 95% confidence → 104 score (capped at 100)
+- **Current**: Deepgram 95% confidence → 81 score (95% × 0.85 = 80.75)
+
+## Graduated Scoring Clarification
+The ranges map stricter internal calculations to user-friendly score bands, making achievements more meaningful whilst maintaining the 0-100 scale users expect.
